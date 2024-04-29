@@ -6,10 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Button, Divider, Flex, Text, View } from "@aws-amplify/ui-react";
 export default function SportHomePage(props) {
   const { overrides, ...rest } = props;
+  const buttonFourTwoThreeTwoOneZeroOneFiveOnClick = useNavigateAction({
+    type: "url",
+    url: "team",
+  });
   return (
     <View
       width="320px"
@@ -110,6 +114,9 @@ export default function SportHomePage(props) {
           isDisabled={false}
           variation="default"
           children="Teams"
+          onClick={() => {
+            buttonFourTwoThreeTwoOneZeroOneFiveOnClick();
+          }}
           {...getOverrideProps(overrides, "Button42321015")}
         ></Button>
         <Divider

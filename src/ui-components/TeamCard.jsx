@@ -6,11 +6,15 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { getOverrideProps, useNavigateAction } from "./utils";
 import { Button, Flex, Image, Text, View } from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function TeamCard(props) {
-  const { overrides, ...rest } = props;
+  const { t, overrides, ...rest } = props;
+  const buttonFourTwoTwoFourSevenOneSixOnClick = useNavigateAction({
+    type: "url",
+    url: "/editt/",
+  });
   return (
     <Flex
       gap="0"
@@ -93,6 +97,9 @@ export default function TeamCard(props) {
           size="default"
           isDisabled={false}
           variation="default"
+          onClick={() => {
+            buttonFourTwoTwoFourSevenOneSixOnClick();
+          }}
           {...getOverrideProps(overrides, "Button4224716")}
         ></Button>
         <Button
