@@ -6,7 +6,10 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { useState } from "react";
+import { getOverrideProps, useNavigateAction } from "./utils";
+import { generateClient } from "aws-amplify/api";
+import { updateTeam } from "../graphql/mutations";
 import {
   Button,
   Divider,
@@ -16,8 +19,36 @@ import {
   TextField,
   View,
 } from "@aws-amplify/ui-react";
+const client = generateClient();
 export default function UIEditTeam(props) {
-  const { overrides, ...rest } = props;
+  const { team, overrides, ...rest } = props;
+  const [
+    textFieldFourTwoTwoNineSevenNineThreeValue,
+    setTextFieldFourTwoTwoNineSevenNineThreeValue,
+  ] = useState("");
+  const [
+    textFieldFourTwoTwoNineSevenNineFourValue,
+    setTextFieldFourTwoTwoNineSevenNineFourValue,
+  ] = useState("");
+  const [
+    textFieldFourTwoTwoNineSevenNineFiveValue,
+    setTextFieldFourTwoTwoNineSevenNineFiveValue,
+  ] = useState("");
+  const iconOnClick = useNavigateAction({ type: "url", url: "/team" });
+  const buttonOnMouseDown = async () => {
+    await client.graphql({
+      query: updateTeam.replaceAll("__typename", ""),
+      variables: {
+        input: {
+          name: textFieldFourTwoTwoNineSevenNineThreeValue,
+          image: textFieldFourTwoTwoNineSevenNineFourValue,
+          coach: textFieldFourTwoTwoNineSevenNineFiveValue,
+          id: team?.id,
+        },
+      },
+    });
+  };
+  const buttonOnMouseUp = useNavigateAction({ type: "url", url: "/team" });
   return (
     <Flex
       gap="16px"
@@ -69,6 +100,9 @@ export default function UIEditTeam(props) {
             shrink="0"
             position="relative"
             padding="0px 0px 0px 0px"
+            onClick={() => {
+              iconOnClick();
+            }}
             {...getOverrideProps(overrides, "Icon")}
           >
             <Icon
@@ -148,6 +182,10 @@ export default function UIEditTeam(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
+            value={textFieldFourTwoTwoNineSevenNineThreeValue}
+            onChange={(event) => {
+              setTextFieldFourTwoTwoNineSevenNineThreeValue(event.target.value);
+            }}
             {...getOverrideProps(overrides, "TextField4229793")}
           ></TextField>
           <TextField
@@ -160,6 +198,10 @@ export default function UIEditTeam(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
+            value={textFieldFourTwoTwoNineSevenNineFourValue}
+            onChange={(event) => {
+              setTextFieldFourTwoTwoNineSevenNineFourValue(event.target.value);
+            }}
             {...getOverrideProps(overrides, "TextField4229794")}
           ></TextField>
           <TextField
@@ -172,6 +214,10 @@ export default function UIEditTeam(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
+            value={textFieldFourTwoTwoNineSevenNineFiveValue}
+            onChange={(event) => {
+              setTextFieldFourTwoTwoNineSevenNineFiveValue(event.target.value);
+            }}
             {...getOverrideProps(overrides, "TextField4229795")}
           ></TextField>
         </Flex>
@@ -207,6 +253,12 @@ export default function UIEditTeam(props) {
             isDisabled={false}
             variation="default"
             children="Save"
+            onMouseDown={() => {
+              buttonOnMouseDown();
+            }}
+            onMouseUp={() => {
+              buttonOnMouseUp();
+            }}
             {...getOverrideProps(overrides, "Button")}
           ></Button>
         </Flex>

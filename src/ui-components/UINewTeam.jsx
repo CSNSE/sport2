@@ -6,7 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "./utils";
+import { useState } from "react";
+import { getOverrideProps, useNavigateAction, processFile } from "./utils";
+import { Field } from "@aws-amplify/ui-react/internal";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
+import { generateClient } from "aws-amplify/api";
+import { createTeam } from "../graphql/mutations";
 import {
   Button,
   Divider,
@@ -16,8 +21,35 @@ import {
   TextField,
   View,
 } from "@aws-amplify/ui-react";
+const client = generateClient();
 export default function UINewTeam(props) {
   const { overrides, ...rest } = props;
+  const [
+    textFieldFourTwoTwoNineEightNineSixValue,
+    setTextFieldFourTwoTwoNineEightNineSixValue,
+  ] = useState("");
+  const [
+    imageName,
+    setImageName,
+  ] = useState("");
+  const [
+    textFieldFourTwoTwoNineEightNineEightValue,
+    setTextFieldFourTwoTwoNineEightNineEightValue,
+  ] = useState("");
+  const vectorOnClick = useNavigateAction({ type: "url", url: "/team" });
+  const buttonOnClick = async () => {
+    await client.graphql({
+      query: createTeam.replaceAll("__typename", ""),
+      variables: {
+        input: {
+          name: textFieldFourTwoTwoNineEightNineSixValue,
+          image: imageName,
+          coach: textFieldFourTwoTwoNineEightNineEightValue,
+        },
+      },
+    });
+  };
+  const buttonOnMouseUp = useNavigateAction({ type: "url", url: "/team" });
   return (
     <Flex
       gap="16px"
@@ -91,6 +123,9 @@ export default function UINewTeam(props) {
               bottom="20.83%"
               left="20.83%"
               right="20.83%"
+              onClick={() => {
+                vectorOnClick();
+              }}
               {...getOverrideProps(overrides, "Vector")}
             ></Icon>
           </View>
@@ -148,20 +183,33 @@ export default function UINewTeam(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
+            value={textFieldFourTwoTwoNineEightNineSixValue}
+            onChange={(event) => {
+              setTextFieldFourTwoTwoNineEightNineSixValue(event.target.value);
+            }}
             {...getOverrideProps(overrides, "TextField4229896")}
           ></TextField>
-          <TextField
-            width="272px"
-            height="unset"
-            label="Image Link"
-            placeholder="http://www.example.com"
-            shrink="0"
-            size="default"
-            isDisabled={false}
-            labelHidden={false}
-            variation="default"
-            {...getOverrideProps(overrides, "TextField4229897")}
-          ></TextField>
+          <Field
+
+label={"Image"}
+isRequired={false}
+isReadOnly={false}
+>
+<StorageManager
+  onUploadSuccess={({ key }) => {
+    setImageName(
+      key
+    );
+  }}
+  processFile={processFile}
+  accessLevel={"public"}
+  acceptedFileTypes={[]}
+  isResumable={false}
+  showThumbnails={true}
+  maxFileCount={1}
+  {...getOverrideProps(overrides, "image")}
+></StorageManager>
+</Field>
           <TextField
             width="272px"
             height="unset"
@@ -172,6 +220,10 @@ export default function UINewTeam(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
+            value={textFieldFourTwoTwoNineEightNineEightValue}
+            onChange={(event) => {
+              setTextFieldFourTwoTwoNineEightNineEightValue(event.target.value);
+            }}
             {...getOverrideProps(overrides, "TextField4229898")}
           ></TextField>
         </Flex>
@@ -206,6 +258,12 @@ export default function UINewTeam(props) {
             isDisabled={false}
             variation="default"
             children="Create"
+            onClick={() => {
+              buttonOnClick();
+            }}
+            onMouseUp={() => {
+              buttonOnMouseUp();
+            }}
             {...getOverrideProps(overrides, "Button")}
           ></Button>
         </Flex>

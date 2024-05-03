@@ -34,6 +34,8 @@ export declare type UIEditTeamOverridesProps = {
     Button?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
 export declare type UIEditTeamProps = React.PropsWithChildren<Partial<FlexProps> & {
+    team?: any;
+} & {
     overrides?: UIEditTeamOverridesProps | undefined | null;
 }>;
 export default function UIEditTeam(props: UIEditTeamProps): React.ReactElement;
