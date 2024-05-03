@@ -14,6 +14,7 @@ export { default as SportHomePage } from "./SportHomePage";
 export { default as SportNavBar } from "./SportNavBar";
 export { default as SportUpdateForm } from "./SportUpdateForm";
 export { default as TeamCard } from "./TeamCard";
+export { default as TeamCardCollection } from "./TeamCardCollection";
 export { default as TeamCreateForm } from "./TeamCreateForm";
 export { default as TeamNavBar } from "./TeamNavBar";
 export { default as TeamUpdateForm } from "./TeamUpdateForm";
