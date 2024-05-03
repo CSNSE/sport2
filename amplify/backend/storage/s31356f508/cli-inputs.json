@@ -1,0 +1,14 @@
+{
+  "resourceName": "s31356f508",
+  "policyUUID": "1356f508",
+  "bucketName": "sport2579b19994685485bbdf88358e2a061f0",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
